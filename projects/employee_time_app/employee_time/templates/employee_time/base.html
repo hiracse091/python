@@ -2,9 +2,44 @@
     <head>
 	<meta charset="UTF-8">
 	{% load staticfiles %}
+	<style type="text/css">
+		body{
+			font-family: 'Arial';
+			font-size: 15px;
+		}
+		h1{
+			border-bottom: 1px solid #ccc;
+			padding: 10px;
+			background: rgba(0, 0, 0, 0.65);
+			color: #fff;
+		}
+		a{
+			display: block;width: 300px;
+			height: 40px;
+			background: #ccc;
+			margin-right: 20px;
+			text-decoration: none;
+			color: #000;
+			float: left;
+			padding: 5px;
+			padding-top: 20px;
+			text-transform: uppercase;
+		}
+		a:hover{
+			color: blue;
+		}
+		div.btnContainer{
+			float: left;
+			/*width: 100%;*/
+			margin-left: 27%;
+		}
+	</style>
     </head>
-    <body>
-		<a href="{% url 'employee_time:load_data' %}">load employee data</a>					
-		<a href="{% url 'employee_time:report_data' %}">view employee report</a>
+    <body align="center">
+    	<h1>Employee Time App</h1>
+    	<div class="btnContainer">
+			<a href="{% url 'employee_time:load_data' %}">load employee data</a>					
+			<a href="{% url 'employee_time:report_data' %}">view employee report</a>
+		</div>
     </body>
 </html>

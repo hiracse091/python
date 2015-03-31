@@ -3,26 +3,83 @@
 	<meta charset="UTF-8">
 	{% load staticfiles %}
     </head>
-    <body>
-								<form action="{% url 'employee_time:load_data_into_db' %}" method="post">
-								{% csrf_token %}
-								<input type="file" name="xlsfile"/>
-								<select name="employee">
-								<option value="5">Rubel
-								<option value="10">Turzo
-								<option value="12">Somrat
-								<option value="16">Mithun
-								<option value="20">Hasan
-								<option value="21">Nahar
-								<option value="31">Shimul
-								<option value="32">Ferdous
-								<option value="34">Rakib
-								<option value="36">Tanvir
-								<option value="37">Sharifur
-								<option value="38">Iftekhar
-								<option value="39">Rayhan
-								</select>
-								<input type="submit"  value="load"/>
-								</form>
+    <style type="text/css">
+		body{
+			font-family: 'Arial';
+			font-size: 15px;
+		}
+		.nav{
+			width: 100%;
+			float: left;
+			margin-left: 20px;
+		}
+		.nav a{
+			display: block;
+			/*width: 100px;*/
+			/*height: 25px;*/
+			background: #ccc;
+			margin-right: 10px;
+			margin-bottom: 20px;
+			text-decoration: none;
+			color: #555;
+			float: left;
+			padding: 10px;
+			/*border:1px solid #ccc;*/
+			border-radius: 5px;
+			text-transform: uppercase;
+		}
+		div.btnContainer{
+			float: left;
+			/*width: 100%;*/
+			margin-left: 20px;
+		}
+		h1{
+			border-bottom: 1px solid #ccc;
+			padding: 10px;
+			background: rgba(0, 0, 0, 0.65);
+			color: #fff;
+		}
+		input[type="submit"]{
+			background: #000;
+			color: #fff;
+			width: 100px;
+			height: 30px;
+			border:0;
+			text-transform: uppercase;
+		}
+		select{
+			height: 30px;
+			border: 1px solid #ccc;
+			margin-right: 20px;
+		}
+	</style>
+    <body align="center">
+    	<h1>Employee Time App</h1>
+    	<div class="nav">				
+			<a href="{% url 'employee_time:home' %}">home</a>
+    		
+    	</div>
+    	<div class="btnContainer">
+			<form action="{% url 'employee_time:load_data_into_db' %}" method="post">
+			{% csrf_token %}
+			<input type="file" name="xlsfile"/>
+			<select name="employee">
+			<option value="5">Rubel
+			<option value="10">Turzo
+			<option value="12">Somrat
+			<option value="16">Mithun
+			<option value="20">Hasan
+			<option value="21">Nahar
+			<option value="31">Shimul
+			<option value="32">Ferdous
+			<option value="34">Rakib
+			<option value="36">Tanvir
+			<option value="37">Sharifur
+			<option value="38">Iftekhar
+			<option value="39">Rayhan
+			</select>
+			<input type="submit"  value="load"/>
+			</form>
+		</div>
     </body>
 </html>

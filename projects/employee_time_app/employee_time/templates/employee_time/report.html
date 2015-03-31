@@ -2,36 +2,116 @@
     <head>
 	<meta charset="UTF-8">
 	{% load staticfiles %}
-    </head>
-    <body>
-	
-		{%if target_hour%}Expected Hour: {{target_hour}}{%endif%} <br>
-		{%if achieved_hour%}Achieved Hour: {{achieved_hour}}{%endif%}<br>
-		{%if late_count%}# of Late Entries: {{late_count}}{%endif%}<br>
+	<style type="text/css">
+		body{
+			font-family: 'Arial';
+			font-size: 15px;
+			margin: 0;
+		}
+		h1{
+			border-bottom: 1px solid #ccc;
+			padding: 10px;
+			background-color: rgba(0, 0, 0, 0.65);
+			color: #fff;
+		}
+		.nav{
+			width: 100%;
+			float: left;
+			margin-left: 20px;
+		}
+		.nav a{
+			display: block;
+			/*width: 100px;*/
+			/*height: 25px;*/
+			background: #ccc;
+			margin-right: 10px;
+			margin-bottom: 20px;
+			text-decoration: none;
+			color: #555;
+			float: left;
+			padding: 10px;
+			/*border:1px solid #ccc;*/
+			border-radius: 5px;
+			text-transform: uppercase;
+		}
+		a:hover{
+			color: blue;
+		}
 		
-		{%if records%}
-		<table border="1">
-			<tr>
-				<th>Employee id</th>
-				<th>Employee Name</th>
-				<th>Date</th>
-				<th>Day</th>
-				<th>Entry</th>
-				<th>Exit</th>
-				<th>Late</th>
-				<th>Working  Hour:Min</th>
-				<th>On/Off Day</th>
-				<th>Leave</th>
-				<th>Note</th>
-			</tr>
-			{% for record in records %}
+		div.btnContainer{
+			float: left;
+			/*width: 100%;*/
+			margin-left: 20px;
+		}
+		.reportTbl{
+
+			border-top:1px solid #ccc;
+			border-left: 1px solid #ccc; 
+			margin-bottom: 20px;
+		}	
+		.reportTbl tr th{
+			background: rgba(0, 0, 0, 0.65);
+			color: #fff;
+			font-size: 18px;
+			font-weight: normal;
+
+		}
+		.reportTbl tr td{
+			font-size: 15px;
+		}
+		.reportTbl tr th, tr td{
+			padding: 10px;
+			border-bottom:1px solid #ccc;
+			border-right: 1px solid #ccc; 
+			text-align: left;
+		}
+
+	</style>
+    </head>
+    <body align="center">
+    	<h1>Employee Time App</h1>
+    	<div class="nav">				
+			<a href="{% url 'employee_time:home' %}">home</a>
+    		<a href="{% url 'employee_time:load_data' %}">load employee data</a>	
+    	</div>
+    	<div class="btnContainer">
+
+	    	<table border="0" cellpadding="5" cellspacing="0" class="reportTbl">
+	    		{%if uid%}<tr><td>Employee ID:</td><td>{{uid}}</td></tr>{%endif%}
+	    		{%if name%}<tr><td>Employee Name:</td><td>{{name}}</td></tr>{%endif%}
+	    		{%if target_hour%}<tr><td>Expected Hour:</td><td>{{target_hour}}</td></tr>{%endif%}
+	    		{%if achieved_hour%}<tr><td>Achieved Hour:</td><td>{{achieved_hour}}</td></tr>{%endif%}
+	    		{%if late_count%}<tr><td>Number of Late Entries:</td><td>{{late_count}}</td></tr>{%endif%}
+	    		{%if leave_count%}<tr><td>Total Leave:</td><td>{{leave_count}}</td></tr>{%endif%}
+	    	</table>
+				
+			
+			{%if records%}
+			<table border="0" cellpadding="0" cellspacing="0" class="reportTbl">
 				<tr>
-				{% for item in record %}
-					<td>{{ item }}</td>
+					<!-- <th>Employee id</th> -->
+					<th>Employee Name</th>
+					<th>Date</th>
+					<th>Day</th>
+					<th>Entry</th>
+					<th>Exit</th>
+					<th>Late</th>
+					<th>Working  Hour:Min</th>
+					<th>On/Off Day</th>
+					<th>Leave</th>
+					<th>Note</th>
+				</tr>
+				{% for record in records %}
+					<tr>
+					{% for item in record %}
+						{% if not forloop.first %} 	                
+							<td>{{ item }}</td>
+						{% endif %}
+					{% endfor %}
+					<tr>
 				{% endfor %}
-				<tr>
-			{% endfor %}
-		</table>
-		{%endif%}
+			</table>
+			{%endif%}
+		</div>
     </body>
 </html>

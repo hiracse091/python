@@ -10,7 +10,7 @@ from calendar import monthrange
 from holiday.models import Holiday, PersonalLeave, SpecialNotes
 
 import os
-
+#import pdb; pdb.set_trace()
 def find_emp_row(uid, s, wb):
     count = 0
     rows = []
@@ -83,11 +83,11 @@ def opt2_emp_row(rows):
 def opt3_emp_row(rows):
     for row in rows:
         if (row[3][0] == 10 and row[3][1] > 30):
-            row.append('y')
+            row.append('Y')
         elif (row[3][0] > 10):
-            row.append('y')
+            row.append('Y')
         else:
-            row.append('n')
+            row.append(' ')
     return rows
 
 
@@ -106,7 +106,8 @@ def opt4_emp_row(rows):
                 start_time = datetime(row[2][0], row[2][1], row[2][2], row[3][0], row[3][1])
                 end_time = datetime(row[2][0], row[2][1], row[2][2], 15, 0)
                 row.append(str(end_time - start_time))
-
+def cmp(a, b):
+    return (a > b) - (a < b) 
 def gen_full_month_record(rows):
     full_month = []
     emp_id = int(rows[0][0])
@@ -137,9 +138,8 @@ def gen_full_month_record_with_holiday(full_month):
             h = Holiday.objects.get(holiday_date=record_date)
             row.append('holiday')
         except:
-            row.append('on day')
+            row.append('...')
     return full_month
-    
 def gen_full_month_record_with_personal_leave(full_month_with_holiday):
     for row in full_month_with_holiday:
         record_date = str(row[2][0]) + '-' + str(row[2][1]) + '-' + str(row[2][2])
@@ -194,14 +194,21 @@ def load_data(request):
     return render(request, 'employee_time/load.html', {})
 
 def load_data_into_db(request):
+    leave_count = 0
     context = RequestContext(request)
     if request.method == 'POST':
         try:
             filename = request.POST['xlsfile']
             abs_path = 'D:/employee_time_app/xls_files/' + filename
-            uid = float(request.POST['employee'])
+            uid = int(request.POST['employee'])
+
             records = report(abs_path, uid)
-            return render(request, 'employee_time/report.html', {'records': records[0], 'target_hour': records[1], 'achieved_hour': records[2], 'late_count': records[3]})
+           
+            for item in records[0]:
+                if(item[9] != ' '):
+                    leave_count +=1
+
+            return render(request, 'employee_time/report.html', {'leave_count':leave_count,'uid':uid,'records': records[0], 'name': records[0][0][1], 'target_hour': records[1], 'achieved_hour': records[2], 'late_count': records[3]})
             #return HttpResponse('i need data grrrrrrrrrrrr')
         except:
             return HttpResponse('no such file')
@@ -221,7 +228,7 @@ def get_holiday_count(full_month_with_holiday):
 def get_late_entry_count(full_month_with_special_notes):
     count = 0
     for row in full_month_with_special_notes:
-        if row[6] == 'y':
+        if row[6] == 'Y':
             count += 1
     return count
 
@@ -236,7 +243,8 @@ def get_month_total_hours_mins(full_month_with_holiday):
     additional_hours = total_mins / 60
     remainder_mins = total_mins % 60
     total_hours += additional_hours
-    total_hours_mins = [total_hours, remainder_mins]
+    total_hours = float("{0:.2f}".format(total_hours))
+    total_hours_mins = str(int(total_hours))+':'+str(remainder_mins) #[total_hours, remainder_mins]
     return total_hours_mins
 
 def report(abs_path, uid):
@@ -260,6 +268,8 @@ def report(abs_path, uid):
              achieved_total_hours_mins = get_month_total_hours_mins(full_month_with_holiday)
              
              full_month_with_personal_leave = gen_full_month_record_with_personal_leave(full_month_with_holiday)
+             
+
              full_month_with_special_notes = gen_full_month_record_with_special_notes(full_month_with_personal_leave)
 
              late_entry_count = get_late_entry_count(full_month_with_special_notes)
@@ -270,11 +280,11 @@ def report(abs_path, uid):
                  if len(row[5]) == 3: row[5] = str(row[5][0]) + ':' + str(row[5][1]) + ':' + str(row[5][2])
 
              for row in full_month_with_special_notes:
-                 if row[4] == []: row[4] = 'N/A'
-                 if row[5] == []: row[5] = 'N/A'
-                 if row[6] == []: row[6] = 'N/A'
-                 if row[7] == []: row[7] = 'N/A'
-                 if row[9] == []: row[9] = 'N/A'
-                 if row[10] == []: row[10] = 'N/A'
+                 if row[4] == []: row[4] = ' '
+                 if row[5] == []: row[5] = ' '
+                 if row[6] == []: row[6] = ' '
+                 if row[7] == []: row[7] = ' '
+                 if row[9] == []: row[9] = ' '
+                 if row[10] == []: row[10] = ' '
 
              return [full_month_with_special_notes, target_working_hours, achieved_total_hours_mins, late_entry_count]
