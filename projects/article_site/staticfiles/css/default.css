@@ -1,0 +1,29 @@
+ body{
+        text-align: center;
+}
+#page{
+    text-align: left;
+    width: 900px;
+    background-color: #bcbcbc;
+    margin: 10px auto 20px auto;
+}
+#sidebar{
+    float: left;
+    width: 200px;
+    border: 1px solid black;
+}
+#content{
+    float: left;
+    width: 600px;
+    border: 1px solid black;
+    padding: 10px;
+    background: url('../images/Chrysanthemum.jpg');
+}
+#content p{
+    color: #ffffff;
+}
+.readbtn{
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+}

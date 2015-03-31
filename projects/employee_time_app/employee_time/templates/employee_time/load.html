@@ -1,0 +1,28 @@
+<html>
+    <head>
+	<meta charset="UTF-8">
+	{% load staticfiles %}
+    </head>
+    <body>
+								<form action="{% url 'employee_time:load_data_into_db' %}" method="post">
+								{% csrf_token %}
+								<input type="file" name="xlsfile"/>
+								<select name="employee">
+								<option value="5">Rubel
+								<option value="10">Turzo
+								<option value="12">Somrat
+								<option value="16">Mithun
+								<option value="20">Hasan
+								<option value="21">Nahar
+								<option value="31">Shimul
+								<option value="32">Ferdous
+								<option value="34">Rakib
+								<option value="36">Tanvir
+								<option value="37">Sharifur
+								<option value="38">Iftekhar
+								<option value="39">Rayhan
+								</select>
+								<input type="submit"  value="load"/>
+								</form>
+    </body>
+</html>

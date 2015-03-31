@@ -1,0 +1,199 @@
+@font-face {
+  font-family: 'Roboto_Light';
+  src: url("../fonts/Roboto-Light.ttf");
+}
+@font-face {
+	font-family: 'Kaushan Script';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Kaushan Script'), local('KaushanScript-Regular'), url(http://fonts.gstatic.com/s/kaushanscript/v4/qx1LSqts-NtiKcLw4N03IFhlQWQpSCpzb2Peu3I-Q34.woff) format('woff');
+} 
+
+body{
+	font-family: 'Roboto_Light';
+}
+.left_cont{
+	background: #3f84bb;
+}
+.logo{
+	color: #fff;
+	background: #3F84BB;
+	height: 60px;
+	font-family: 'Kaushan Script';
+	padding: 7px 0 0 15px;
+	font-size: 28px;
+}
+.heading {
+    background: none repeat scroll 0 0 #5a5a5a;
+    color: #fff;
+    font-size: 15px;
+    height: 50px;
+    line-height: 48px;
+    padding-left: 15px;
+}
+.main_nav > ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.main_nav > ul > li{
+    font-size: 12px;
+}
+.main_nav > ul > li > a{
+	background: none repeat scroll 0 0 #4c9ccf;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	color: #fff;
+	text-decoration: none;
+	width: 100%;
+	float: left;
+    padding-left: 15px;
+    line-height: 40px;
+}
+.main_nav > ul > li > a:hover{
+	background: #484848;
+}
+.main_nav > ul > li > a > span{
+	font-size: 18px;
+	padding-right: 10px;
+}
+
+.main_nav  ul  li  ul{
+	float:left;
+	list-style:none;
+	padding: 0;
+	margin: 0;
+	width:100%;
+}
+.main_nav  ul  li  ul  li{
+	width:100%;
+	float:left;
+	background: none repeat scroll 0 0 #4c9ccf;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.main_nav ul  li  ul  li  a{
+	float:left;
+	height:30px;
+	color:#fff;
+	line-height:30px;
+	padding-left:30px;
+}
+.main_nav ul  li  ul  li  a span{
+	padding-right:10px;
+}
+
+.content_head{
+	background: #3F84BB;
+	height: 60px;
+}
+.breadcrumb_cont{
+	background: none repeat scroll 0 0 #5a5a5a;
+    color: #fff;
+    font-size: 15px;
+    height: 50px;
+}
+.settings_menu{
+	margin: 10px 10px 0 0;
+}
+.settings_menu .dropdown-toggle{
+	cursor: pointer;
+}
+.settings_menu .dropdown-toggle span{
+	color: #fff;
+	font-size: 36px;
+}
+.settings_menu .dropdown-menu{
+	border-radius: 0px;
+}
+.settings_menu .dropdown-menu li a{
+	text-align: right;
+}
+.settings_menu .dropdown-menu li a:hover{
+	background: #5a5a5a;
+	color: #fff;
+}
+
+.login_head{
+	border-bottom: 1px solid rgba(0,0,0,0.3);
+	margin-top: 150px;
+}
+.login_head h3{
+	font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 5px;
+	padding: 0 10px 0 30px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.login_body{
+	padding-left: 30px;
+	padding-top: 10px;
+}
+.login_body label{
+	font-size: 13px;
+	width: 100%;
+	font-weight: normal;
+	padding-top: 5px;
+}
+.login_body input[type="text"]{
+	width: 300px;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+
+.login_body input[type="password"]{
+	width: 300px;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+.login_body input[type="submit"]{
+	font-size: 12px;
+    margin-left: -1px;
+    margin-top: 20px;
+    padding: 5px 10px;
+    width: 100px;
+    background: #5a5a5a;
+    border: none;
+    color: #fff;
+    float: left;
+}
+.login_body span{
+	float: left;
+	margin: 25px 0 0 15px;
+	font-size: 12px;
+}
+.login_body span a{
+	color: #333;
+	text-decoration: none;
+	outline: none;
+}
+.login_body span a:hover{
+	color: #000;
+}
+
+.field_head {
+    border-bottom: 1px solid #ccc;
+    color: #666;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    padding-left: 15px;
+    width: 100%;
+}
+.field_desc {
+    color: #666;
+    float: left;
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    width: 100%;
+}
+
+.border_top_purchase_view {
+    border: 3px solid #ccc;
+    margin-bottom: 10px;
+}
+.padding_top_10 {
+    padding-top: 10px;
+}

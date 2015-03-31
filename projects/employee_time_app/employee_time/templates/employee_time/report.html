@@ -1,0 +1,37 @@
+<html>
+    <head>
+	<meta charset="UTF-8">
+	{% load staticfiles %}
+    </head>
+    <body>
+	
+		{%if target_hour%}Expected Hour: {{target_hour}}{%endif%} <br>
+		{%if achieved_hour%}Achieved Hour: {{achieved_hour}}{%endif%}<br>
+		{%if late_count%}# of Late Entries: {{late_count}}{%endif%}<br>
+		
+		{%if records%}
+		<table border="1">
+			<tr>
+				<th>Employee id</th>
+				<th>Employee Name</th>
+				<th>Date</th>
+				<th>Day</th>
+				<th>Entry</th>
+				<th>Exit</th>
+				<th>Late</th>
+				<th>Working  Hour:Min</th>
+				<th>On/Off Day</th>
+				<th>Leave</th>
+				<th>Note</th>
+			</tr>
+			{% for record in records %}
+				<tr>
+				{% for item in record %}
+					<td>{{ item }}</td>
+				{% endfor %}
+				<tr>
+			{% endfor %}
+		</table>
+		{%endif%}
+    </body>
+</html>

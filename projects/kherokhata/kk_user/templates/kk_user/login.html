@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Kherokhata</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'kk_user/css/bootstrap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'kk_user/css/style.css' %}">
+
+	<script type="text/javascript" src="{% static 'kk_user/js/jquery-1.10.2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'kk_user/js/bootstrap.min.js' %}"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12 left_cont">
+			<div class="row">
+				<div class="logo">
+					Kherokhata
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="row">
+				
+				<div class="col-md-8">
+					<div class="row">
+						
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="login_head">
+						<h3><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;User Login</h3>
+					</div>
+					
+					<div class="login_body">
+					<form action="{% url 'kk_user:signin'%}" method="post">
+					{% csrf_token %}
+						<label>Username</label>
+						<input type="text" name="username">
+						<label>Password</label>
+						<input type="password" name="password">
+
+						<input type="submit" value="Sign In" name="submit">
+					</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

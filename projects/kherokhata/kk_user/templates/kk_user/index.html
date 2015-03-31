@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Kherokhata</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'kk_user/css/bootstrap.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'kk_user/css/style.css' %}">
+
+	<script type="text/javascript" src="{% static 'kk_user/js/jquery-1.10.2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'kk_user/js/bootstrap.min.js' %}"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2 left_cont">
+			<div class="row">
+				<div class="logo">
+					Kherokhata
+				</div>
+				<div class="heading">
+					<span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;&nbsp;Admin Panel
+				</div>
+
+				<div class="main_nav">
+					<ul>
+					
+						<li><a href="#"><span class="glyphicon glyphicon-fire"></span>Project</a>
+							<ul>
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 or profile.user_type.id == 3 %}
+								<li><a href="{% url 'kk_user:project'%}"><span class="glyphicon glyphicon-fire"></span>Projects</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 %}
+								<li><a href="{% url 'kk_user:workarea'%}"><span class="glyphicon glyphicon-fire"></span>Work Areas</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 %}
+								<li><a href="{% url 'kk_user:projectworkarea'%}"><span class="glyphicon glyphicon-fire"></span>Project Work Areas</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 %}
+								<li><a href="{% url 'kk_user:projectuser'%}"><span class="glyphicon glyphicon-fire"></span>Project Users</a>
+								{% endif %}
+							</ul>
+						</li>
+						
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>Module</a>
+							<ul>
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 or profile.user_type.id == 3 %}
+								<li><a href="{% url 'kk_user:module'%}"><span class="glyphicon glyphicon-fire"></span>Modules</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 %}
+								<li><a href="{% url 'kk_user:moduleuser'%}"><span class="glyphicon glyphicon-fire"></span>Module Users</a>
+								{% endif %}
+							</ul>
+						</li>
+						<li><a href="#"><span class="glyphicon glyphicon-hdd"></span>Task</a>
+							<ul>
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 or profile.user_type.id == 3 %}
+								<li><a href="{% url 'kk_user:usertask'%}"><span class="glyphicon glyphicon-fire"></span>Tasks</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 %}
+								<li><a href="{% url 'kk_user:urgency'%}"><span class="glyphicon glyphicon-fire"></span>Urgency</a>
+								{% endif %}
+								{% if profile.user_type.id == 1 or profile.user_type.id == 2 %}
+								<li><a href="{% url 'kk_user:taskuser'%}"><span class="glyphicon glyphicon-fire"></span>Task Users</a>
+								{% endif %}
+							</ul>
+						</li>
+						
+						<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Report</a>
+							<ul>
+								<li><a href="{% url 'kk_user:tasktime'%}"><span class="glyphicon glyphicon-fire"></span>Tasks Time</a>
+								<li><a href="{% url 'kk_user:moduletime'%}"><span class="glyphicon glyphicon-fire"></span>Modules Time</a>
+							</ul>
+						</li>
+						
+						
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="content_head">
+					<div class="dropdown pull-right settings_menu">
+					  <div class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+					    <span class="glyphicon glyphicon-cog"></span>
+					  </div>
+					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					    <li><a href="#">{{ user.username }}</a></li>
+					    <li><a href="#">Change Password</a></li>
+					    <li><a href="{% url 'kk_user:signout'%}">Sign Out</a></li>
+					  </ul>
+					</div>
+				</div>
+				<div class="breadcrumb_cont">
+				</div>
+				
+				<!--#################################################################Content Div###########################################################################-->
+				<div class="col-md-12">
+				{% if projects %}
+					<table class="table table-striped">
+						<tr>
+							<th>Project</th><th>Due Date</th><th>Estimated Time(Hours)</th><th></th>
+						</tr>
+						{% for project in projects %}
+						<tr>
+							<td>{{  project.project_name }}</td>
+							<td>{{  project.project_due_date }}</td>
+							<td>{{  project.project_estimatedtime }}</td>
+							<td>
+							<a href="{% url 'kk_user:projectdetails'%}?projectid={{ project.id }}" class="btn btn-xs btn-primary">View</a>
+							{% if profile.user_type.id == 1 %}
+							<a href="{% url 'kk_user:edit_project'%}?projectid={{ project.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_project'%}?projectid={{ project.id }}" class="btn btn-xs btn-primary">Delete</a>
+							{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if project %}
+					 <div class="col-md-4">
+					  <p class="field_head">Project</p>
+					  <p class="field_desc">{{project.project_name}}</p>
+
+					  <p class="field_head">Description</p>
+					  <p class="field_desc">{{project.project_descriptoin}}</p>
+
+					  <p class="field_head">Estimated Time(Hours)</p>
+					  <p class="field_desc">{{project.project_estimatedtime}}</p>
+
+					  <p class="field_head">Due Date</p>
+					  <p class="field_desc">{{project.project_due_date}}</p>
+					 </div>
+				{%  endif %}
+				{% if workareas %}
+					<table class="table table-striped">
+						<tr>
+							<th>Work Areas</th><th></th>
+						</tr>
+						{% for workarea in workareas %}
+						<tr>
+							<td>{{  workarea.area }}</td>
+							<td>
+							<a href="{% url 'kk_user:workareadetails'%}?workareaid={{ workarea.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_workarea'%}?workareaid={{ workarea.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_workarea'%}?workareaid={{ workarea.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if workarea %}
+					 <div class="col-md-4">
+					  <p class="field_head">Work Area</p>
+					  <p class="field_desc">{{workarea.area}}</p>
+					 </div>
+				{%  endif %}
+				{% if projectworkareas %}
+					<table class="table table-striped">
+						<tr>
+							<th>Workarea</th><th>Project</th><th></th>
+						</tr>
+						{% for projectworkarea in projectworkareas %}
+						<tr>
+							<td>{{  projectworkarea.area_id.area }}</td>
+							<td>{{  projectworkarea.project_id.project_name }}</td>
+							<td>
+							<a href="{% url 'kk_user:projectworkareadetails'%}?projectworkareaid={{ projectworkarea.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_projectworkarea'%}?projectworkareaid={{ projectworkarea.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_projectworkarea'%}?projectworkareaid={{ projectworkarea.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if projectworkarea %}
+					 <div class="col-md-4">
+					  <p class="field_head">Workarea</p>
+					  <p class="field_desc">{{projectworkarea.area_id.area}}</p>
+					  
+					  <p class="field_head">Project</p>
+					  <p class="field_desc">{{projectworkarea.project_id.project_name}}</p>
+					 </div>
+				{%  endif %}
+				{% if projectusers %}
+					<table class="table table-striped">
+						<tr>
+							<th>User</th><th>Project</th><th></th>
+						</tr>
+						{% for projectuser in projectusers %}
+						<tr>
+							<td>{{  projectuser.project_user.username }}</td>
+							<td>{{  projectuser.project_id.project_name }}</td>
+							<td>
+							<a href="{% url 'kk_user:projectuserdetails'%}?projectuserdetailsid={{ projectuser.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_projectuser'%}?projectuserid={{ projectuser.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_projectuser'%}?projectuserid={{ projectuser.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if projectuser %}
+					 <div class="col-md-4">
+					  <p class="field_head">User</p>
+					  <p class="field_desc">{{projectuser.project_user.username}}</p>
+					  
+					  <p class="field_head">Project</p>
+					  <p class="field_desc">{{projectuser.project_id.project_name}}</p>
+					 </div>
+				{%  endif %}
+				{% if modules %}
+					<table class="table table-striped">
+						<tr>
+							<th>Module</th><th>Project</th><th>Due Date</th><th>Estimated Time(Hours)</th><th></th>
+						</tr>
+						{% for module in modules %}
+						<tr>
+							<td>{{  module.module_name }}</td>
+							<td>{{  module.project_workarea_id.project_id.project_name }}</td>
+							<td>{{  module.module_due_date }}</td>
+							<td>{{  module.module_estimatedtime }}</td>
+							<td>
+							<a href="{% url 'kk_user:moduledetails'%}?moduleid={{ module.id }}" class="btn btn-xs btn-primary">View</a>
+							{% if profile.user_type.id == 1 or profile.user_type.id == 2 %}
+							<a href="{% url 'kk_user:edit_module'%}?moduleid={{ module.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_module'%}?moduleid={{ module.id }}" class="btn btn-xs btn-primary">Delete</a>
+							{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if module %}
+					 <div class="col-md-4">
+					  <p class="field_head">Module</p>
+					  <p class="field_desc">{{module.module_name}}</p>
+
+					  <p class="field_head">Description</p>
+					  <p class="field_desc">{{module.module_description}}</p>
+
+					  <p class="field_head">Estimated Time(Hours)</p>
+					  <p class="field_desc">{{module.module_estimatedtime}}</p>
+
+					  <p class="field_head">Due Date</p>
+					  <p class="field_desc">{{module.module_due_date}}</p>
+					 </div>
+				{%  endif %}
+				{% if moduleusers %}
+					<table class="table table-striped">
+						<tr>
+							<th>User</th><th>Module</th><th>Project</th><th></th>
+						</tr>
+						{% for moduleuser in moduleusers %}
+						<tr>
+							<td>{{  moduleuser.module_user.username }}</td>
+							<td>{{  moduleuser.module_id.module_name }}</td>
+							<td>{{  moduleuser.module_id.project_workarea_id.project_id.project_name }}</td>
+							<td>
+							<a href="{% url 'kk_user:moduleuserdetails'%}?moduleuserid={{ moduleuser.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_moduleuser'%}?moduleuserid={{ moduleuser.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_moduleuser'%}?moduleuserid={{ moduleuser.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if moduleuser %}
+					 <div class="col-md-4">
+					  <p class="field_head">User</p>
+					  <p class="field_desc">{{  moduleuser.module_user.username }}</p>
+					  
+					  <p class="field_head">Module</p>
+					  <p class="field_desc">{{  moduleuser.module_id.module_name }}</p>
+					  
+					  <p class="field_head">Project</p>
+					  <p class="field_desc">{{  moduleuser.module_id.project_workarea_id.project_id.project_name }}</p>
+					 </div>
+				{%  endif %}
+				{% if tasks %}
+					<table class="table table-striped">
+						<tr>
+							<th>Task</th><th>Module</th><th>Due Date</th><th>Estimated Time</th><th></th>
+						</tr>
+						{% for task in tasks %}
+						<tr>
+							<td>{{  task.task_name }}</td>
+							<td>{{  task.module_id.module_name }}</td>
+							<td>{{  task.task_due_date }}</td>
+							<td>{{  task.task_estimatedtime }}</td>
+							<td>
+							<a href="{% url 'kk_user:usertaskdetails'%}?taskid={{ task.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_usertask'%}?taskid={{ task.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_usertask'%}?taskid={{ task.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if task %}
+					 <div class="col-md-4">
+					  <p class="field_head">Task</p>
+					  <p class="field_desc">{{task.task_name}}</p>
+
+					  <p class="field_head">Description</p>
+					  <p class="field_desc">{{task.task_description}}</p>
+
+					  <p class="field_head">Estimated Time(Hours)</p>
+					  <p class="field_desc">{{task.task_estimatedtime}}</p>
+
+					  <p class="field_head">Due Date</p>
+					  <p class="field_desc">{{task.task_due_date}}</p>
+					 </div>
+				{%  endif %}
+				{% if urgency %}
+					<table class="table table-striped">
+						<tr>
+							<th>Urgency Level</th><th></th>
+						</tr>
+						{% for u in urgency %}
+						<tr>
+							<td>{{  u.urgency_level }}</td>
+							<td>
+							<a href="{% url 'kk_user:urgencydetails'%}?urgencyid={{ u.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_urgency'%}?urgencyid={{ u.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_urgency'%}?urgencyid={{ u.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if urgencydetails %}
+					 <div class="col-md-4">
+					  <p class="field_head">Urgency</p>
+					  <p class="field_desc">{{  urgencydetails.urgency_level }}</p>
+					 </div>
+				{%  endif %}
+				{% if taskusers %}
+					<table class="table table-striped">
+						<tr>
+							<th>User</th><th>Task</th><th>Module</th><th></th>
+						</tr>
+						{% for taskuser in taskusers %}
+						<tr>
+							<td>{{  taskuser.task_user.username }}</td>
+							<td>{{  taskuser.task_id.task_name }}</td>
+							<td>{{  taskuser.task_id.module_id.module_name }}</td>
+							<td>
+							<a href="{% url 'kk_user:taskuserdetails'%}?taskuserid={{ taskuser.id }}" class="btn btn-xs btn-primary">View</a>
+							<a href="{% url 'kk_user:edit_taskuser'%}?taskuserid={{ taskuser.id }}" class="btn btn-xs btn-primary">Edit</a>
+							<a href="{% url 'kk_user:delete_taskuser'%}?taskuserid={{ taskuser.id }}" class="btn btn-xs btn-primary">Delete</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				{% if taskuser %}
+					 <div class="col-md-4">
+					  <p class="field_head">User</p>
+					  <p class="field_desc">{{  taskuser.task_user.username }}</p>
+					  
+					  <p class="field_head">Task</p>
+					  <p class="field_desc">{{  taskuser.task_id.task_name }}</p>
+					  
+					  <p class="field_head">Module</p>
+					  <p class="field_desc">{{  taskuser.task_id.module_id.module_name }}</p>
+					 </div>
+				{%  endif %}
+				{% if taskdatalist %}
+				<table class="table table-striped">
+						<tr>
+							<th>Task</th><th>Time</th>
+						</tr>
+						{% for task in taskdatalist %}
+						<tr>
+							{% for item in task %}
+								{% if item.task_name %}
+									<td>{{  item.task_name }}</td>
+								{% else %}
+									<td>{{  item }}</td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				
+				{% if moduledatalist %}
+				<table class="table table-striped">
+						<tr>
+							<th>Module</th><th>Time</th>
+						</tr>
+						{% for module in moduledatalist %}
+						<tr>
+							{% for item in module %}
+								{% if item.module_name %}
+									<td>{{  item.module_name }}</td>
+								{% else %}
+									<td>{{  item }}</td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+					</table>
+				{%  endif %}
+				<!--####################################################CREATE##################################################################-->
+				{% if projectcreate %}
+				{% if profile.user_type.id == 1 %}<a href="{% url 'kk_user:add_project'%}" class="btn btn-xs btn-primary">Create</a>{%  endif %}
+				{%  endif %}
+				{% if workareacreate %}
+				<a href="{% url 'kk_user:add_workarea'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if projectworkareacreate %}
+				<a href="{% url 'kk_user:add_projectworkarea'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if projectusercreate %}
+				<a href="{% url 'kk_user:add_projectuser'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if modulecreate %}
+				{% if profile.user_type.id == 1 or profile.user_type.id == 2 %}<a href="{% url 'kk_user:add_module'%}" class="btn btn-xs btn-primary">Create</a>{% endif %}
+				{%  endif %}
+				{% if moduleusercreate %}
+				<a href="{% url 'kk_user:add_moduleuser'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if usertaskcreate %}
+				<a href="{% url 'kk_user:add_usertask'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if urgencycreate %}
+				<a href="{% url 'kk_user:add_urgency'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				{% if taskusercreate %}
+				<a href="{% url 'kk_user:add_taskuser'%}" class="btn btn-xs btn-primary">Create</a>
+				{%  endif %}
+				<!--###################################################FORM#####################################################################-->
+				{% if form %}
+					{% if formtype == 'project' %}<form action="{% url 'kk_user:add_project'%}" method="post">{% endif %}
+					{% if formtype == 'workarea' %}<form action="{% url 'kk_user:add_workarea'%}" method="post">{% endif %}
+					{% if formtype == 'projectworkarea' %}<form action="{% url 'kk_user:add_projectworkarea'%}" method="post">{% endif %}
+					{% if formtype == 'projectuser' %}<form action="{% url 'kk_user:add_projectuser'%}" method="post">{% endif %}
+					{% if formtype == 'module' %}<form action="{% url 'kk_user:add_module'%}" method="post">{% endif %}
+					{% if formtype == 'moduleuser' %}<form action="{% url 'kk_user:add_moduleuser'%}" method="post">{% endif %}
+					{% if formtype == 'usertask' %}<form action="{% url 'kk_user:add_usertask'%}" method="post">{% endif %}
+					{% if formtype == 'urgency' %}<form action="{% url 'kk_user:add_urgency'%}" method="post">{% endif %}
+					{% if formtype == 'taskuser' %}<form action="{% url 'kk_user:add_taskuser'%}" method="post">{% endif %}
+					{% csrf_token %}
+					{{ form.as_p }}
+					<input type="submit" value="Submit" />
+					</form>
+				{%  endif %}
+				
+				{% if editform %}
+					{% if formtype == 'project' %}<form action="{% url 'kk_user:edit_project'%}" method="post">{% endif %}
+					{% if formtype == 'workarea' %}<form action="{% url 'kk_user:edit_workarea'%}" method="post">{% endif %}
+					{% if formtype == 'projectworkarea' %}<form action="{% url 'kk_user:edit_projectworkarea'%}" method="post">{% endif %}
+					{% if formtype == 'projectuser' %}<form action="{% url 'kk_user:edit_projectuser'%}" method="post">{% endif %}
+					{% if formtype == 'module' %}<form action="{% url 'kk_user:edit_module'%}" method="post">{% endif %}
+					{% if formtype == 'moduleuser' %}<form action="{% url 'kk_user:edit_moduleuser'%}" method="post">{% endif %}
+					{% if formtype == 'usertask' %}<form action="{% url 'kk_user:edit_usertask'%}" method="post">{% endif %}
+					{% if formtype == 'urgency' %}<form action="{% url 'kk_user:edit_urgency'%}" method="post">{% endif %}
+					{% if formtype == 'taskuser' %}<form action="{% url 'kk_user:edit_taskuser'%}" method="post">{% endif %}
+					{% csrf_token %}
+					{{ editform.as_p }}
+					<input type="submit" value="Submit" />
+					</form>
+				{%  endif %}
+				
+				
+				</div>
+				<!--#################################################################Content Div###########################################################################-->
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.left_cont').css('height',$( window ).height()+'px');
+
+	$('#id_module_id').on('change',function(){
+		getModuleUser();
+	});
+	
+	getModuleUser();
+	
+	$('#id_task_id').on('change',function(){
+		getTaskUser();
+	});
+	
+	$('#id_module_estimatedtime').on('change',function(){
+		validateModuleEstimatedTime();
+	});
+	
+	$('#id_project_workarea_id').on('change',function(){
+		if($('#id_module_estimatedtime').val()){
+			validateModuleEstimatedTime();
+		}
+		
+	});
+	
+	getModuleUser();
+	getTaskUser();
+	//---------------------------------------------function def----------------------------------------------------//
+	//-------------------------------------------------------------------------------------------------------------//
+	function getModuleUser(){
+		if($('#id_module_user').length > 0)
+		{
+			 var moduleid = $('#id_module_id').val();
+			 $.ajax({
+				   type : 'GET',
+				   dataType : 'json',
+				   url : '/user/module/moduleuser/',
+				   data: {moduleid:moduleid},
+				   beforeSend : function( request ){},
+				   success : function( data )
+					{   
+						 if(data.result == "success")
+						 {
+							var html = '';
+							for(i in data.moduleusers)
+							{
+								html += '<option value="'+data.moduleusers[i].userid+'">'+ data.moduleusers[i].username +'</option>';
+							}
+							$('#id_module_user').html(html);
+						 }						 
+					}
+				  })
+		}
+	}
+	
+	function getTaskUser(){
+		if($('#id_task_user').length > 0)
+		{
+			 var taskid = $('#id_task_id').val();
+			 $.ajax({
+				   type : 'GET',
+				   dataType : 'json',
+				   url : '/user/task/taskuser/',
+				   data: {taskid:taskid},
+				   beforeSend : function( request ){},
+				   success : function( data )
+					{   
+						 if(data.result == "success")
+						 {
+							var html = '';
+							for(i in data.taskusers)
+							{
+								html += '<option value="'+data.taskusers[i].userid+'">'+ data.taskusers[i].username +'</option>';
+							}
+							$('#id_task_user').html(html);
+						 }						 
+					}
+				  })
+		}
+	}
+	
+	function validateModuleEstimatedTime(){
+		if($('#id_project_workarea_id').val())
+		{
+			var project_workarea_id = $('#id_project_workarea_id').val();
+			var module_estimated_time = $('#id_module_estimatedtime').val();
+			$.ajax({
+				   type : 'GET',
+				   dataType : 'json',
+				   url : '/user/module/estimatedtime/validate/',
+				   data: {project_workarea_id:project_workarea_id, module_estimated_time:module_estimated_time},
+				   beforeSend : function( request ){},
+				   success : function( data )
+					{   
+						 if(data.result == "success")
+						 {
+							if(data.valid == '0'){alert('you can give maximum hour: ' + data.available_module_time);}
+						 }						 
+					}
+				  })
+		}
+		else
+		{
+			alert("u havn't selected any project work area");
+		}
+	}
+	//---------------------------------------------function def----------------------------------------------------//
+	//-------------------------------------------------------------------------------------------------------------//
+</script>
+
+</body>
+</html>

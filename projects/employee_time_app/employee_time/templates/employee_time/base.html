@@ -1,0 +1,10 @@
+<html>
+    <head>
+	<meta charset="UTF-8">
+	{% load staticfiles %}
+    </head>
+    <body>
+		<a href="{% url 'employee_time:load_data' %}">load employee data</a>					
+		<a href="{% url 'employee_time:report_data' %}">view employee report</a>
+    </body>
+</html>

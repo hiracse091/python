@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div ng-init="name = {{ full_name }} ">
+        <h2>Hi {{ full_name }} you are logged in!</h2>
+        <p>Click <a href="/accounts/logout/">here</a> to logout.</p>
+
+        <p ng-bind-template-unsafe = "name"></p>
+    <div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Articles</h1>
+    {% if articles.count > 0 %}
+        {% for article in articles %}
+        <div id="article_cont">
+            <h2><a href="/articles/get/{{ article.id }}/">{{ article.title }}</a></h2>
+            <p>{{ article.body|lower|truncatewords:"10" }}</p>
+            <div class="readbtn">read more</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>None to show</p>
+    {% endif %}
+{% endblock %}

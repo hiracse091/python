@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My base template{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-1.10.2.js' %}"></script>
+    <script type="text/javascript" src="{% static "js/angular.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/script.js" %}"></script>
+</head>
+<body ng-app="app">
+
+    <div id="page">
+        <div id="sidebar">
+           {% block sidebar %}
+            <ul>
+                <li><a href="/articles/all">Articles</a></li>
+                <li><a href="/admin/">Admin</a></li>
+                <li><a href="/accounts/register">Register</a></li>
+            </ul>
+            {% endblock %}
+        </div>
+        <div id="content">
+            {% block content %}
+                <input type="text" name="test" ng-model="testTxt">
+                <div>{$ testTxt $}</div>
+                This is the content area
+            {% endblock %}
+        {% comment %}<img src="{% static "images/Chrysanthemum.jpg" %}">{% endcomment %}
+        </div>
+    </div>
+</body>
+</html>
